@@ -14,6 +14,7 @@ export default function Home() {
   });
 
   console.log(data, fetching, error);
+
   return (
     <div className={styles.container}>
       <Head>
