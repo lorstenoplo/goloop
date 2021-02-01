@@ -1,6 +1,6 @@
 # NextJs eccomercere app 
 
-### Hello there 👋 please star this repo if you liked it
+#### Hello there 👋 please star this repo if you liked it
 
 ### 🔭 This an eccom app backed by apollo-graphql server with express middleware
 ### 🌱 It uses urql over apollo ( i feel its hard to use ) to fetch data from my graphql api
