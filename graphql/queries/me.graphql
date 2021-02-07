@@ -1,0 +1,8 @@
+query Me($token: String!) {
+  me(token: $token) {
+    username
+    id
+    createdAt
+    password
+  }
+}

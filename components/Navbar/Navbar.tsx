@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,11 +7,13 @@ import {
   InputBase,
   Menu,
   MenuItem,
+  Container,
+  CircularProgress,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import SearchIcon from "@material-ui/icons/Search";
 import MenuIcon from "@material-ui/icons/Menu";
-
+import NextLink from "next/link";
 interface NavbarProps {}
 
 import { makeStyles, fade } from "@material-ui/core/styles";
@@ -27,10 +29,12 @@ export const useStyles = makeStyles(
       },
       menuButton: {
         marginRight: theme.spacing(2),
+        color: "black",
       },
       title: {
         flexGrow: 1,
         display: "none",
+        color: "black",
         [theme.breakpoints.up("sm")]: {
           display: "block",
         },
@@ -84,7 +88,10 @@ export const useStyles = makeStyles(
         },
       },
       appBar: {
-        backgroundColor: blue[600],
+        backgroundColor: "#f1f3f5",
+      },
+      accountIcon: {
+        color: "black",
       },
     } as const)
 );
@@ -92,7 +99,9 @@ export const useStyles = makeStyles(
 import { cloneElement } from "react";
 import { useScrollTrigger } from "@material-ui/core";
 import { Props } from "../../types/HomePageProps";
-import { blue } from "@material-ui/core/colors";
+import { useMeQuery } from "../../src/generated/graphql";
+import { useRouter } from "next/router";
+import LoadingScreen from "../LoadingScreen";
 
 const ElevationScroll = (props: Props) => {
   const { children, window } = props;
@@ -109,8 +118,57 @@ const ElevationScroll = (props: Props) => {
 };
 
 const Navbar: React.FC<NavbarProps> = (props) => {
+  const [qid, setQid] = useState<string>("");
+  useEffect(() => {
+    setQid(localStorage.getItem("qid") || "");
+  }, []);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [{ fetching, data }] = useMeQuery({
+    variables: { token: qid },
+  });
+
+  const router = useRouter();
+
+  let userBody = <></>;
+  if (fetching) {
+    // data is loading
+    console.log("loading");
+    return <LoadingScreen />;
+  } else if (!data?.me) {
+    // user is logged out
+    userBody = (
+      <>
+        <MenuItem>
+          <NextLink href="/login">
+            <a>Login</a>
+          </NextLink>
+        </MenuItem>
+        <MenuItem>
+          <NextLink href="/register">
+            <a>Register</a>
+          </NextLink>
+        </MenuItem>
+      </>
+    );
+    console.log("not logged in");
+  } else {
+    // user is logged in
+    userBody = (
+      <>
+        <MenuItem>{data.me.username}</MenuItem>
+        <MenuItem
+          onClick={() => {
+            localStorage.removeItem("qid");
+            router.replace("/login");
+          }}
+        >
+          Logout
+        </MenuItem>
+      </>
+    );
+    console.log("user is there");
+  }
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -132,19 +190,20 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem>Profile</MenuItem>
       <MenuItem>My account</MenuItem>
+      {userBody}
     </Menu>
   );
 
+  // console.log("data is >>>", data);
+
   return (
     <ElevationScroll {...props}>
-      <AppBar color="default">
+      <AppBar className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
-            color="inherit"
             aria-label="menu"
           >
             <MenuIcon />
@@ -169,7 +228,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
-            color="inherit"
+            className={classes.accountIcon}
             onClick={handleProfileMenuOpen}
           >
             <AccountCircle />

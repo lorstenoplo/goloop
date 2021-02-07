@@ -146,6 +146,30 @@ export type RegisterMutation = (
   ) }
 );
 
+export type MeQueryVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'username' | 'id' | 'createdAt' | 'password'>
+  )> }
+);
+
+export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductsQuery = (
+  { __typename?: 'Query' }
+  & { products: Array<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'title' | 'price' | 'rating' | 'imageURL'>
+  )> }
+);
+
 
 export const LoginDocument = gql`
     mutation Login($username: String!, $password: String!) {
@@ -188,4 +212,33 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const MeDocument = gql`
+    query Me($token: String!) {
+  me(token: $token) {
+    username
+    id
+    createdAt
+    password
+  }
+}
+    `;
+
+export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
+};
+export const ProductsDocument = gql`
+    query Products {
+  products {
+    id
+    title
+    price
+    rating
+    imageURL
+  }
+}
+    `;
+
+export function useProductsQuery(options: Omit<Urql.UseQueryArgs<ProductsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ProductsQuery>({ query: ProductsDocument, ...options });
 };

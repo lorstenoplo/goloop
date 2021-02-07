@@ -4,13 +4,18 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Fab from "@material-ui/core/Fab";
 import Toolbar from "@material-ui/core/Toolbar";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import { withUrqlClient } from "next-urql";
 import Head from "next/head";
+import { Navbar, ScrollToTopButton, LoadingScreen } from "../components";
 import styles from "../styles/Home.module.css";
-import Navbar from "../components/Navbar/Navbar";
-import { Props } from "../types/HomePageProps";
-import ScrollToTop from "../components/ScrollToTopButton";
+import { CreateUrqlClient } from "../utils/createUrqlClient";
+import { useProductsQuery } from "../src/generated/graphql";
 
-export default function Home(props: Props) {
+const Index = () => {
+  const [{ data, fetching }] = useProductsQuery();
+  if (fetching) {
+    return <LoadingScreen />;
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -20,7 +25,7 @@ export default function Home(props: Props) {
       <CssBaseline />
       <Navbar />
       <Toolbar id="back-to-top-anchor" />
-      <Container>
+      <Container className={styles.body}>
         <Box my={2}>
           {[...new Array(102)]
             .map(
@@ -32,11 +37,13 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
             .join("\n")}
         </Box>
       </Container>
-      <ScrollToTop {...props}>
+      <ScrollToTopButton>
         <Fab color="secondary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
         </Fab>
-      </ScrollToTop>
+      </ScrollToTopButton>
     </div>
   );
-}
+};
+
+export default withUrqlClient(CreateUrqlClient)(Index);
