@@ -6,15 +6,24 @@ import Toolbar from "@material-ui/core/Toolbar";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { withUrqlClient } from "next-urql";
 import Head from "next/head";
-import { Navbar, ScrollToTopButton, LoadingScreen } from "../components";
+import {
+  ScrollToTopButton,
+  LoadingScreen,
+  Layout,
+  Navbar,
+} from "../components";
 import styles from "../styles/Home.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
 import { useProductsQuery } from "../src/generated/graphql";
+import Link from "next/link";
 
 const Index = () => {
-  const [{ data, fetching }] = useProductsQuery();
+  const [{ data, fetching, error }] = useProductsQuery();
   if (fetching) {
     return <LoadingScreen />;
+  }
+  if (error) {
+    return <div style={{ color: "red" }}>{error.message}</div>;
   }
   return (
     <div className={styles.container}>
@@ -22,21 +31,18 @@ const Index = () => {
         <title>GoLoop</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <CssBaseline />
-      <Navbar />
-      <Toolbar id="back-to-top-anchor" />
-      <Container className={styles.body}>
+      <Layout className={styles.body}>
         <Box my={2}>
-          {[...new Array(102)]
-            .map(
-              () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-            )
-            .join("\n")}
+          {data &&
+            data.products.map((product) => (
+              <Link href="/products/[productId]" as={`/products/${product.id}`}>
+                <a>
+                  <div key={product.id}> {product.title} </div>
+                </a>
+              </Link>
+            ))}
         </Box>
-      </Container>
+      </Layout>
       <ScrollToTopButton>
         <Fab color="secondary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
@@ -46,4 +52,4 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
   );
 };
 
-export default withUrqlClient(CreateUrqlClient)(Index);
+export default withUrqlClient(CreateUrqlClient, { ssr: true })(Index);

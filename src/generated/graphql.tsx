@@ -159,6 +159,19 @@ export type MeQuery = (
   )> }
 );
 
+export type ProductQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+
+export type ProductQuery = (
+  { __typename?: 'Query' }
+  & { product?: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'title' | 'price' | 'rating' | 'imageURL'>
+  )> }
+);
+
 export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -226,6 +239,21 @@ export const MeDocument = gql`
 
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
+};
+export const ProductDocument = gql`
+    query Product($productId: ID!) {
+  product(id: $productId) {
+    id
+    title
+    price
+    rating
+    imageURL
+  }
+}
+    `;
+
+export function useProductQuery(options: Omit<Urql.UseQueryArgs<ProductQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ProductQuery>({ query: ProductDocument, ...options });
 };
 export const ProductsDocument = gql`
     query Products {

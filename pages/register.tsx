@@ -6,6 +6,8 @@ import React from "react";
 import InputField from "../components/InputField";
 import { useRegisterMutation } from "../src/generated/graphql";
 import { toErrorMap } from "../src/utils/toErrorMap";
+import { withUrqlClient } from "next-urql";
+import { CreateUrqlClient } from "../utils/createUrqlClient";
 
 interface Values {
   email: string;
@@ -83,4 +85,4 @@ const Register: React.FC<registerProps> = () => {
   );
 };
 
-export default Register;
+export default withUrqlClient(CreateUrqlClient, { ssr: false })(Register);

@@ -9,11 +9,19 @@ import {
   MenuItem,
   Container,
   CircularProgress,
+  Tooltip,
+  Zoom,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import SearchIcon from "@material-ui/icons/Search";
 import MenuIcon from "@material-ui/icons/Menu";
 import NextLink from "next/link";
+import { cloneElement } from "react";
+import { useScrollTrigger } from "@material-ui/core";
+import { Props } from "../../types/HomePageProps";
+import { useMeQuery } from "../../src/generated/graphql";
+import { useRouter } from "next/router";
+import LoadingScreen from "../LoadingScreen";
 interface NavbarProps {}
 
 import { makeStyles, fade } from "@material-ui/core/styles";
@@ -95,13 +103,6 @@ export const useStyles = makeStyles(
       },
     } as const)
 );
-
-import { cloneElement } from "react";
-import { useScrollTrigger } from "@material-ui/core";
-import { Props } from "../../types/HomePageProps";
-import { useMeQuery } from "../../src/generated/graphql";
-import { useRouter } from "next/router";
-import LoadingScreen from "../LoadingScreen";
 
 const ElevationScroll = (props: Props) => {
   const { children, window } = props;
@@ -201,16 +202,21 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     <ElevationScroll {...props}>
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6">
-            Go Loop Shopping
-          </Typography>
+          <Tooltip TransitionComponent={Zoom} title="Menu">
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </IconButton>
+          </Tooltip>
+          <NextLink href="/">
+            <a className={classes.title}>
+              <Typography variant="h6">Go Loop Shopping</Typography>
+            </a>
+          </NextLink>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon color="inherit" />
