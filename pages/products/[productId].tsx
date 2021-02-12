@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { Layout, LoadingScreen } from "../../components";
 import styles from "../../styles/Home.module.css";
-import { withUrqlClient } from "next-urql";
+import { withUrqlClient, PartialNextContext } from "next-urql";
 import { CreateUrqlClient } from "../../utils/createUrqlClient";
 import { useProductQuery } from "../../src/generated/graphql";
 import Head from "next/head";
@@ -12,6 +12,7 @@ const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
       productId,
     },
   });
+
   if (fetching) {
     return <LoadingScreen />;
   }

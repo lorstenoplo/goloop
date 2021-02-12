@@ -1,3 +1,4 @@
+/* Main page */
 .container {
   min-height: 100vh;
   padding: 0 0.5rem;
@@ -6,4 +7,24 @@
   justify-content: center;
   align-items: center;
   background-color: #f1f3f5;
+}
+
+.body {
+  flex-direction: row;
+}
+
+/* Product */
+.product {
+  width: fit-content;
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px 45px;
+  cursor: pointer;
+  margin-right: 80px;
+}
+
+.productImg {
+  max-height: 200px;
+  width: 100%;
+  object-fit: contain;
 }

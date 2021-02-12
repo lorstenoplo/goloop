@@ -11,6 +11,7 @@ import {
   LoadingScreen,
   Layout,
   Navbar,
+  Product,
 } from "../components";
 import styles from "../styles/Home.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
@@ -34,10 +35,17 @@ const Index = () => {
       <Layout className={styles.body}>
         <Box my={2}>
           {data &&
-            data.products.map((product) => (
-              <Link href="/products/[productId]" as={`/products/${product.id}`}>
+            data.products.map(({ id, imageURL, price, rating, title }) => (
+              <Link href="/products/[productId]" as={`/products/${id}`}>
                 <a>
-                  <div key={product.id}> {product.title} </div>
+                  <Product
+                    key={id}
+                    id={id}
+                    imageURL={imageURL}
+                    rating={rating}
+                    title={title}
+                    price={price}
+                  />
                 </a>
               </Link>
             ))}
