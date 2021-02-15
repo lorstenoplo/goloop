@@ -25,6 +25,7 @@ import LoadingScreen from "../LoadingScreen";
 interface NavbarProps {}
 
 import { makeStyles, fade } from "@material-ui/core/styles";
+import SideBar from "../SideBar";
 
 export const useStyles = makeStyles(
   (theme) =>
@@ -35,10 +36,7 @@ export const useStyles = makeStyles(
         right: theme.spacing(2),
         flexGrow: 1,
       },
-      menuButton: {
-        marginRight: theme.spacing(2),
-        color: "black",
-      },
+
       title: {
         flexGrow: 1,
         display: "none",
@@ -131,14 +129,14 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 
   const router = useRouter();
 
-  let userBody = <></>;
+  let UserBody = () => <></>;
   if (fetching) {
     // data is loading
     console.log("loading");
     return <LoadingScreen />;
   } else if (!data?.me) {
     // user is logged out
-    userBody = (
+    UserBody = () => (
       <>
         <MenuItem>
           <NextLink href="/login">
@@ -155,9 +153,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     console.log("not logged in");
   } else {
     // user is logged in
-    userBody = (
+    UserBody = () => (
       <>
-        <MenuItem>{data.me.username}</MenuItem>
+        <MenuItem>{data?.me?.username}</MenuItem>
         <MenuItem
           onClick={() => {
             localStorage.removeItem("qid");
@@ -192,7 +190,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       onClose={handleMenuClose}
     >
       <MenuItem>My account</MenuItem>
-      {userBody}
+      <UserBody />
     </Menu>
   );
 
@@ -202,15 +200,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     <ElevationScroll {...props}>
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <Tooltip TransitionComponent={Zoom} title="Menu">
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Tooltip>
+          <SideBar>
+            <MenuIcon />
+          </SideBar>
           <NextLink href="/">
             <a className={classes.title}>
               <Typography variant="h6">Go Loop Shopping</Typography>
