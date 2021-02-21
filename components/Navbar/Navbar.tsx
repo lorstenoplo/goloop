@@ -234,25 +234,21 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          <NextLink href="/checkout">
-            <a>
-              <Tooltip TransitionComponent={Zoom} title="Your Cart">
-                <IconButton
-                  aria-label="cart"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="false"
-                  className={classes.accountIcon}
-                  onClick={() =>
-                    state.basket.length > 0 && router.push("/checkout")
-                  }
-                >
-                  <Badge badgeContent={state.basket.length} color="secondary">
-                    <ShoppingCartOutlinedIcon />
-                  </Badge>
-                </IconButton>
-              </Tooltip>
-            </a>
-          </NextLink>
+
+          <Tooltip TransitionComponent={Zoom} title="Your Cart">
+            <IconButton
+              aria-label="cart"
+              aria-controls="menu-appbar"
+              aria-haspopup="false"
+              className={classes.accountIcon}
+              onClick={() => state.basket.length > 0 && router.push("/cart")}
+            >
+              <Badge badgeContent={state.basket.length} color="secondary">
+                <ShoppingCartOutlinedIcon />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"

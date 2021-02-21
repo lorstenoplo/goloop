@@ -9,13 +9,13 @@ import Head from "next/head";
 import { Box, IconButton, Tooltip, Zoom } from "@material-ui/core";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 
-const Checkout: React.FC = () => {
+const Cart: React.FC = () => {
   const { state, dispatch } = useStateValue();
 
   return (
     <motion.div initial="initial" animate="animate" exit={{ opacity: 0 }}>
       <Head>
-        <title>Checkout | Review your items in cart</title>
+        <title>Cart | Review your items in cart</title>
       </Head>
       <Layout className={styles.page}>
         <Box
@@ -32,7 +32,7 @@ const Checkout: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className={styles.checkoutProduct}
+              className={styles.cartProduct}
               key={id}
             >
               <Box
@@ -76,4 +76,4 @@ const Checkout: React.FC = () => {
   );
 };
 
-export default withUrqlClient(CreateUrqlClient, { ssr: false })(Checkout);
+export default withUrqlClient(CreateUrqlClient, { ssr: false })(Cart);

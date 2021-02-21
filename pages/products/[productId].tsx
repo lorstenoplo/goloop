@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { Layout, LoadingScreen } from "../../components";
+import { LoadingScreen } from "../../components";
 import styles from "../../styles/Product.module.css";
 import { withUrqlClient, PartialNextContext } from "next-urql";
 import { CreateUrqlClient } from "../../utils/createUrqlClient";
@@ -7,8 +7,11 @@ import { useProductQuery } from "../../src/generated/graphql";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Button } from "@material-ui/core";
+import { Button, Tooltip, Zoom, IconButton, Badge } from "@material-ui/core";
 import { useStateValue } from "../../context/StateProvider";
+import { useRouter } from "next/router";
+import classes from "../../styles/Product.module.css";
+import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 
 const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
   const [{ data, fetching, error }] = useProductQuery({
@@ -18,6 +21,7 @@ const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
   });
 
   const { dispatch, state } = useStateValue();
+  const router = useRouter();
 
   if (fetching) {
     return <LoadingScreen />;
@@ -95,11 +99,24 @@ const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
 
       <div className={styles.InfoCont}>
         <motion.div className={styles.InfoContInner} variants={stagger}>
-          <Link scroll={false} href="/">
-            <a>
-              <motion.div variants={fadeInUp}>Back to products</motion.div>
-            </a>
-          </Link>
+          <motion.div variants={fadeInUp}>
+            <Link scroll={false} href="/">
+              <a>Back to products</a>
+            </Link>
+            <Tooltip TransitionComponent={Zoom} title="Your Cart">
+              <IconButton
+                aria-label="cart"
+                aria-controls="menu-appbar"
+                aria-haspopup="false"
+                className={classes.accountIcon}
+                onClick={() => state.basket.length > 0 && router.push("/cart")}
+              >
+                <Badge badgeContent={state.basket.length} color="secondary">
+                  <ShoppingCartOutlinedIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+          </motion.div>
           <motion.h1 variants={fadeInUp}>{data?.product?.title}</motion.h1>
           <motion.p style={{ width: "90%" }} variants={fadeInUp}>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
