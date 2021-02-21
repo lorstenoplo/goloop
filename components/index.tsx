@@ -5,3 +5,4 @@ export { default as Layout } from "./Layout";
 export { default as Navbar } from "./Navbar/Navbar";
 export { default as Product } from "./Product";
 export { default as SideBar } from "./SideBar";
+export { default as Report } from "./Report";

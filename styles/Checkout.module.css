@@ -1,0 +1,22 @@
+.page {
+  background-color: #fff;
+  display: flex;
+  padding: 10px;
+  min-height: 100vh;
+}
+
+.checkoutProduct {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33%;
+  margin-right: 5px;
+  margin-bottom: 20px;
+}
+
+.image {
+  height: 210px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}

@@ -7,10 +7,9 @@ import {
   InputBase,
   Menu,
   MenuItem,
-  Container,
-  CircularProgress,
-  Tooltip,
+  Badge,
   Zoom,
+  Tooltip,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import SearchIcon from "@material-ui/icons/Search";
@@ -21,11 +20,13 @@ import { useScrollTrigger } from "@material-ui/core";
 import { Props } from "../../types/HomePageProps";
 import { useMeQuery } from "../../src/generated/graphql";
 import { useRouter } from "next/router";
+import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import LoadingScreen from "../LoadingScreen";
 interface NavbarProps {}
 
 import { makeStyles, fade } from "@material-ui/core/styles";
 import SideBar from "../SideBar";
+import { useStateValue } from "../../context/StateProvider";
 
 export const useStyles = makeStyles(
   (theme) =>
@@ -70,7 +71,7 @@ export const useStyles = makeStyles(
         [theme.breakpoints.up("sm")]: {
           width: "20ch",
           "&:focus": {
-            width: "80ch",
+            width: "70ch",
             backgroundColor: "#ffffff",
             boxShadow:
               "0 1px 2px 0 rgba(60,64,67,0.3),0 1px 3px 1px rgba(60,64,67,0.15)",
@@ -126,6 +127,17 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [{ fetching, data }] = useMeQuery({
     variables: { token: qid },
   });
+
+  const { state, dispatch } = useStateValue();
+
+  useEffect(() => {
+    if (!fetching) {
+      dispatch({
+        type: "SET_USER",
+        value: data?.me,
+      });
+    }
+  }, [dispatch]);
 
   const router = useRouter();
 
@@ -222,6 +234,25 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
+          <NextLink href="/checkout">
+            <a>
+              <Tooltip TransitionComponent={Zoom} title="Your Cart">
+                <IconButton
+                  aria-label="cart"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="false"
+                  className={classes.accountIcon}
+                  onClick={() =>
+                    state.basket.length > 0 && router.push("/checkout")
+                  }
+                >
+                  <Badge badgeContent={state.basket.length} color="secondary">
+                    <ShoppingCartOutlinedIcon />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
+            </a>
+          </NextLink>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"

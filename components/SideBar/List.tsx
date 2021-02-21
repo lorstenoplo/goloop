@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ListItem,
   ListItemIcon,
   ListItemText,
   Divider,
   List,
+  Typography,
 } from "@material-ui/core";
 import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
@@ -14,6 +15,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import PaymentIcon from "@material-ui/icons/Payment";
 import ReportIcon from "@material-ui/icons/Report";
 import { useRouter } from "next/router";
+import Report from "../Report";
 
 type listProps = {
   toggleDrawer: (
@@ -24,14 +26,19 @@ type listProps = {
 
 const CustomList: React.FC<listProps> = ({ toggleDrawer, classes }) => {
   const router = useRouter();
+
   return (
     <div
       className={classes.list}
       role="presentation"
       // onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
+      //onKeyDown={toggleDrawer(false)}
     >
       <List>
+        <Typography variant="h4" style={{ padding: "5px 15px" }}>
+          Go Loop
+        </Typography>
+        <Divider />
         <ListItem button onClick={() => router.push("/")}>
           <ListItemIcon>
             <HomeRoundedIcon />
@@ -71,12 +78,7 @@ const CustomList: React.FC<listProps> = ({ toggleDrawer, classes }) => {
           </ListItemIcon>
           <ListItemText primary="About" />
         </ListItem>
-        <ListItem button onClick={() => router.push("/report")}>
-          <ListItemIcon>
-            <ReportIcon />
-          </ListItemIcon>
-          <ListItemText primary="Report" />
-        </ListItem>
+        <Report />
       </List>
     </div>
   );

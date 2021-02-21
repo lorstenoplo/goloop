@@ -8,6 +8,7 @@ import Head from "next/head";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@material-ui/core";
+import { useStateValue } from "../../context/StateProvider";
 
 const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
   const [{ data, fetching, error }] = useProductQuery({
@@ -15,6 +16,8 @@ const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
       productId,
     },
   });
+
+  const { dispatch, state } = useStateValue();
 
   if (fetching) {
     return <LoadingScreen />;
@@ -47,6 +50,21 @@ const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
         ease: easing,
       },
     },
+  };
+
+  const addToBasket = () => {
+    if (data?.product) {
+      dispatch({
+        type: "ADD_TO_BASKET",
+        value: {
+          id: data.product.id,
+          title: data.product.title,
+          imageURL: data.product.imageURL,
+          rating: data.product.rating,
+          price: data.product.price,
+        },
+      });
+    }
   };
 
   return (
@@ -90,7 +108,12 @@ const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
             odit.
           </motion.p>
           <motion.div className={styles.btnCont} variants={fadeInUp}>
-            <Button disableElevation variant="contained" color="primary">
+            <Button
+              onClick={addToBasket}
+              disableElevation
+              variant="contained"
+              color="primary"
+            >
               Add to Cart
             </Button>
             <Button disableElevation variant="contained" color="default">

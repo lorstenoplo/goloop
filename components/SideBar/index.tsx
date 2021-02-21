@@ -25,9 +25,9 @@ const SideBar: React.FC = ({ children }) => {
     event: React.KeyboardEvent | React.MouseEvent
   ) => {
     if (
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
+      (event.type === "keydown" &&
+        (event as React.KeyboardEvent).key === "Tab") ||
+      (event as React.KeyboardEvent).key === "Shift"
     ) {
       return;
     }
