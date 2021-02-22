@@ -1,6 +1,6 @@
 .page {
   background-color: #fff;
-  display: flex;
+  display: flex !important;
   padding: 10px;
   min-height: 100vh;
 }

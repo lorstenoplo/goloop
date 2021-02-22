@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { LoadingScreen } from "../../components";
 import styles from "../../styles/Product.module.css";
-import { withUrqlClient, PartialNextContext } from "next-urql";
+import { withUrqlClient } from "next-urql";
 import { CreateUrqlClient } from "../../utils/createUrqlClient";
 import { useProductQuery } from "../../src/generated/graphql";
 import Head from "next/head";
@@ -99,7 +99,7 @@ const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
 
       <div className={styles.InfoCont}>
         <motion.div className={styles.InfoContInner} variants={stagger}>
-          <motion.div variants={fadeInUp}>
+          <motion.div className={styles.topCont} variants={fadeInUp}>
             <Link scroll={false} href="/">
               <a>Back to products</a>
             </Link>
@@ -112,7 +112,7 @@ const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
                 onClick={() => state.basket.length > 0 && router.push("/cart")}
               >
                 <Badge badgeContent={state.basket.length} color="secondary">
-                  <ShoppingCartOutlinedIcon />
+                  <ShoppingCartOutlinedIcon fontSize="small" />
                 </Badge>
               </IconButton>
             </Tooltip>
