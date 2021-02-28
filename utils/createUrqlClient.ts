@@ -8,11 +8,9 @@ import {
 import { cacheExchange } from "@urql/exchange-graphcache";
 import betterUpdateQuery from "./betterUpdateQuery";
 
-const __prod__ = process.env.NODE_ENV === "production";
-
 export const CreateUrqlClient = (ssrExchange: any) => ({
-  url: __prod__ ? process.env.API_URL! : "http://localhost:5000/graphql",
-  fetchOptions: {
+  url: process.env.NEXT_PUBLIC_API_URL!,
+  fetchOptions: {. 
     credentials: "include" as const,
   },
   exchanges: [
