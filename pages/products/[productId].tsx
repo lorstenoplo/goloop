@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { LoadingScreen } from "../../components";
 import styles from "../../styles/Product.module.css";
-import { withUrqlClient } from "next-urql";
+import { withUrqlClient, NextComponentType } from "next-urql";
 import { CreateUrqlClient } from "../../utils/createUrqlClient";
 import { useProductQuery } from "../../src/generated/graphql";
 import Head from "next/head";
@@ -13,7 +13,11 @@ import { useRouter } from "next/router";
 import classes from "../../styles/Product.module.css";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 
-const ProductPage: NextPage<{ productId: string }> = ({ productId }) => {
+const ProductPage: NextComponentType<
+  { query: any; AppTree: any; pathname: string },
+  {},
+  {}
+> = ({ productId }) => {
   const [{ data, fetching, error }] = useProductQuery({
     variables: {
       productId,
