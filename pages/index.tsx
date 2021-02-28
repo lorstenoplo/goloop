@@ -1,25 +1,22 @@
 import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Fab from "@material-ui/core/Fab";
-import Toolbar from "@material-ui/core/Toolbar";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import { motion } from "framer-motion";
 import { withUrqlClient } from "next-urql";
 import Head from "next/head";
+import Link from "next/link";
 import {
-  ScrollToTopButton,
-  LoadingScreen,
   Layout,
-  Navbar,
+  LoadingScreen,
   Product,
+  ScrollToTopButton,
 } from "../components";
+import { useProductsQuery } from "../src/generated/graphql";
 import styles from "../styles/Home.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
-import { useProductsQuery } from "../src/generated/graphql";
-import Link from "next/link";
-import { motion } from "framer-motion";
+import React from "react";
 
-const Index = () => {
+const Index: React.FC = () => {
   const [{ data, fetching, error }] = useProductsQuery();
   if (fetching) {
     return <LoadingScreen />;
