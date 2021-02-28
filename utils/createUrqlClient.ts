@@ -9,7 +9,7 @@ import { cacheExchange } from "@urql/exchange-graphcache";
 import betterUpdateQuery from "./betterUpdateQuery";
 
 export const CreateUrqlClient = (ssrExchange: any) => ({
-  url: process.env.NEXT_PUBLIC_API_URL!,
+  url: process.env.NEXT_PUBLIC_API_URL as string,
   fetchOptions: {. 
     credentials: "include" as const,
   },
