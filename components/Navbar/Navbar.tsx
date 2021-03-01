@@ -129,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   });
 
   const { state, dispatch } = useStateValue();
-
+  //  console.log(state);
   useEffect(() => {
     if (!fetching) {
       dispatch({

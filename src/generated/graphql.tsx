@@ -53,6 +53,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createProduct: Product;
   deleteProduct?: Maybe<Product>;
+  report?: Maybe<Scalars['Boolean']>;
   register: UserResponse;
   login: UserResponse;
   delete?: Maybe<User>;
@@ -69,6 +70,12 @@ export type MutationCreateProductArgs = {
 
 export type MutationDeleteProductArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationReportArgs = {
+  username: Scalars['String'];
+  problem: Scalars['String'];
 };
 
 
@@ -144,6 +151,17 @@ export type RegisterMutation = (
       & Pick<FieldError, 'field' | 'message'>
     )>> }
   ) }
+);
+
+export type ReportMutationVariables = Exact<{
+  username: Scalars['String'];
+  problem: Scalars['String'];
+}>;
+
+
+export type ReportMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'report'>
 );
 
 export type MeQueryVariables = Exact<{
@@ -225,6 +243,15 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const ReportDocument = gql`
+    mutation Report($username: String!, $problem: String!) {
+  report(username: $username, problem: $problem)
+}
+    `;
+
+export function useReportMutation() {
+  return Urql.useMutation<ReportMutation, ReportMutationVariables>(ReportDocument);
 };
 export const MeDocument = gql`
     query Me($token: String!) {
