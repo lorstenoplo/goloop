@@ -1,8 +1,7 @@
-import Drawer from "@material-ui/core/Drawer";
+import { IconButton, SwipeableDrawer, Tooltip, Zoom } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import CustomList from "./List";
-import { IconButton, Tooltip, Zoom } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -20,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 const SideBar: React.FC = ({ children }) => {
   const classes = useStyles();
   const [state, setState] = useState<boolean>(false);
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   const toggleDrawer = (open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -47,9 +47,16 @@ const SideBar: React.FC = ({ children }) => {
           {children}
         </IconButton>
       </Tooltip>
-      <Drawer anchor="left" open={state} onClose={toggleDrawer(false)}>
+      <SwipeableDrawer
+        anchor="left"
+        open={state}
+        onOpen={toggleDrawer(true)}
+        onClose={toggleDrawer(false)}
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+      >
         <CustomList classes={classes} toggleDrawer={toggleDrawer} />
-      </Drawer>
+      </SwipeableDrawer>
     </React.Fragment>
   );
 };

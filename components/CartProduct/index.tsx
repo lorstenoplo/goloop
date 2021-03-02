@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Box, Tooltip, Zoom, IconButton } from "@material-ui/core";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import { useStateValue } from "../../context/StateProvider";
+import { fadeInUp } from "../../utils/staggerAnimationHelper";
 
 const CartProduct: React.FC<Product> = ({ id, imageURL, title, price }) => {
   const { dispatch } = useStateValue();
@@ -13,6 +14,7 @@ const CartProduct: React.FC<Product> = ({ id, imageURL, title, price }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={styles.cartProduct}
+      variants={fadeInUp}
     >
       <Box
         display="flex"

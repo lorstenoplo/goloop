@@ -11,22 +11,21 @@ import { CreateUrqlClient } from "../utils/createUrqlClient";
 const Cart: React.FC = () => {
   const { state } = useStateValue();
 
+  const stagger = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
   return (
     <motion.div initial="initial" animate="animate" exit={{ opacity: 0 }}>
       <Head>
         <title>Cart | Review your items in cart</title>
       </Head>
-      <Layout className={styles.page}>
-        <Box
-          mx="auto"
-          justifyContent="space-between"
-          display="flex"
-          flexDirection="row"
-          my={2}
-          px={8}
-          width="60%"
-          flexWrap="wrap"
-        >
+      <Layout navColor="#fff" className={styles.page}>
+        <motion.div className={styles.productsContainer} variants={stagger}>
           {state.basket.map(({ id, title, imageURL, price, rating }, i) => (
             <CartProduct
               key={i}
@@ -37,7 +36,8 @@ const Cart: React.FC = () => {
               rating={rating}
             />
           ))}
-        </Box>
+        </motion.div>
+
         <Box>
           <CartOptions />
         </Box>

@@ -41,7 +41,7 @@ const about = () => {
       <Head>
         <title>About</title>
       </Head>
-      <Layout className={styles.page}>
+      <Layout navColor="#fafafa" className={styles.page}>
         <motion.div className={styles.textCont} variants={stagger}>
           <motion.div variants={fadeInUp}>
             <Box my={2}>

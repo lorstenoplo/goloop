@@ -22,7 +22,10 @@ import { useMeQuery } from "../../src/generated/graphql";
 import { useRouter } from "next/router";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import LoadingScreen from "../LoadingScreen";
-interface NavbarProps {}
+
+interface NavbarProps {
+  color?: string;
+}
 
 import { makeStyles, fade } from "@material-ui/core/styles";
 import SideBar from "../SideBar";
@@ -95,7 +98,7 @@ export const useStyles = makeStyles(
         },
       },
       appBar: {
-        backgroundColor: "#f1f3f5",
+        backgroundColor: (props: NavbarProps) => props.color || "#f1f3f5",
       },
       accountIcon: {
         color: "black",
@@ -122,7 +125,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   useEffect(() => {
     setQid(localStorage.getItem("qid") || "");
   }, []);
-  const classes = useStyles();
+  const classes = useStyles(props);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [{ fetching, data }] = useMeQuery({
     variables: { token: qid },
@@ -144,7 +147,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   let UserBody = () => <></>;
   if (fetching) {
     // data is loading
-    console.log("loading");
+    // console.log("loading");
     return <LoadingScreen />;
   } else if (!data?.me) {
     // user is logged out
@@ -162,7 +165,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         </MenuItem>
       </>
     );
-    console.log("not logged in");
+    //console.log("not logged in");
   } else {
     // user is logged in
     UserBody = () => (
@@ -178,7 +181,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         </MenuItem>
       </>
     );
-    console.log("user is there");
+    //console.log("user is there");
   }
 
   const handleMenuClose = () => {

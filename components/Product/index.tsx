@@ -2,37 +2,10 @@ import React from "react";
 import styles from "../../styles/Home.module.css";
 import { ProductProps } from "./types";
 import { motion } from "framer-motion";
+import { fadeInUp } from "../../utils/staggerAnimationHelper";
+import truncate from "../../utils/truncate";
 
-const Product: React.FC<ProductProps> = ({
-  id,
-  imageURL,
-  price,
-  title,
-  rating,
-}) => {
-  function truncate(str: string | undefined, n: number) {
-    if (str) {
-      return str.length > n ? str.substr(0, n - 1) + "..." : str;
-    }
-  }
-
-  let easing = [0.6, -0.05, 0.01, 0.99];
-
-  const fadeInUp = {
-    initial: {
-      y: 60,
-      opacity: 0,
-      transition: { duration: 0.6, ease: easing },
-    },
-    animate: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: easing,
-      },
-    },
-  };
+const Product: React.FC<ProductProps> = ({ imageURL, price, title }) => {
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
