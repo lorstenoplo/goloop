@@ -18,3 +18,18 @@
   width: 50%;
   height: 70%;
 }
+
+@media only screen and (max-width: 650px) {
+  .page {
+    flex-direction: column-reverse !important;
+  }
+  .textCont {
+    width: 100%;
+    margin-right: 0px;
+  }
+  .img {
+    width: 100%;
+    object-fit: contain;
+    flex: 1;
+  }
+}

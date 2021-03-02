@@ -51,8 +51,6 @@ const Index: React.FC = () => {
             justifyContent="space-between"
             display="flex"
             flexDirection="row"
-            my={2}
-            px={8}
             flexWrap="wrap"
           >
             {data &&
