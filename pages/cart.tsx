@@ -7,6 +7,8 @@ import { CartProduct, Layout, CartOptions } from "../components";
 import { useStateValue } from "../context/StateProvider";
 import styles from "../styles/Cart.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
+import EditRoundedIcon from "@material-ui/icons/EditRounded";
+import AlternateEmailRoundedIcon from "@material-ui/icons/AlternateEmailRounded";
 
 const Cart: React.FC = () => {
   const { state } = useStateValue();
@@ -39,7 +41,23 @@ const Cart: React.FC = () => {
         </motion.div>
 
         <Box>
-          <CartOptions />
+          <CartOptions>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <CartOptions.Title>Guest Checkout</CartOptions.Title>
+              <EditRoundedIcon />
+            </Box>
+            <CartOptions.Info>
+              <CartOptions.SubTitle>
+                {/* {state.user?.username || "Guest"} */}
+                guset
+              </CartOptions.SubTitle>
+              <AlternateEmailRoundedIcon />
+            </CartOptions.Info>
+          </CartOptions>
         </Box>
       </Layout>
     </motion.div>

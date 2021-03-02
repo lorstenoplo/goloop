@@ -2,7 +2,7 @@
   background-color: #fff;
   display: flex !important;
   padding: 10px;
-  min-height: 100vh;
+  min-height: calc(100vh -64px);
 }
 
 .cartProduct {
@@ -36,9 +36,10 @@
 }
 
 .optionsContainer {
-  background-color: lightgray;
+  background-color: rgba(0, 0, 0, 0.05);
   padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  border-radius: 8px;
 }
