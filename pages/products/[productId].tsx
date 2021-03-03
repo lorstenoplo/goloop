@@ -121,7 +121,7 @@ const ProductPage: NextComponentType<
             </Tooltip>
           </motion.div>
           <motion.h1 variants={fadeInUp}>{data?.product?.title}</motion.h1>
-          <motion.p style={{ width: "90%" }} variants={fadeInUp}>
+          <motion.p className={styles.productInfo} variants={fadeInUp}>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
             suscipit quaerat quod, accusantium ipsa eum officiis quam, accusamus
             sapiente amet sequi, quos quas qui aliquid. Aperiam enim rem fugit

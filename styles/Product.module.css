@@ -51,6 +51,10 @@
   align-items: center;
 }
 
+.productInfo {
+  width: 90%;
+}
+
 @media only screen and (max-width: 650px) {
   .page {
     flex-direction: column;
@@ -64,6 +68,9 @@
     margin: 0;
   }
   .btnCont {
+    width: 100%;
+  }
+  .productInfo {
     width: 100%;
   }
 }
