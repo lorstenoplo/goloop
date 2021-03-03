@@ -23,6 +23,7 @@ import { useStateValue } from "../../context/StateProvider";
 import { Props } from "../../types/HomePageProps";
 import useGetUser from "../../utils/useGetUser";
 import SideBar from "../SideBar";
+import LoadingScreen from "../LoadingScreen";
 
 interface NavbarProps {
   color?: string;

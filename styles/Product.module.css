@@ -61,7 +61,8 @@
     overflow-y: scroll;
   }
   .imageCont,
-  .InfoCont {
+  .InfoCont,
+  .topCont {
     width: 100%;
   }
   .InfoContInner > h1 {
