@@ -15,9 +15,21 @@ import { useProductsQuery } from "../src/generated/graphql";
 import styles from "../styles/Home.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
 import React from "react";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  productsContainer: {
+    [theme.breakpoints.down("md")]: {
+      justifyContent: "center",
+    },
+  },
+}));
 
 const Index: React.FC = () => {
   const [{ data, fetching, error }] = useProductsQuery();
+
+  const classes = useStyles();
+
   if (fetching) {
     return <LoadingScreen />;
   }
@@ -45,13 +57,16 @@ const Index: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout className={styles.body}>
-        <motion.div variants={stagger}>
+        <motion.div className={styles.innerCont} variants={stagger}>
           <Box
             mx="auto"
             justifyContent="space-between"
             display="flex"
             flexDirection="row"
             flexWrap="wrap"
+            px="auto"
+            alignItems="center"
+            className={classes.productsContainer}
           >
             {data &&
               data.products.map(({ id, imageURL, price, rating, title }) => (

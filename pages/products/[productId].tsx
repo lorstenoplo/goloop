@@ -1,4 +1,3 @@
-import { NextPage } from "next";
 import { LoadingScreen } from "../../components";
 import styles from "../../styles/Product.module.css";
 import { withUrqlClient, NextComponentType } from "next-urql";

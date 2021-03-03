@@ -6,7 +6,7 @@ import { useScrollTrigger, Zoom } from "@material-ui/core";
 const ScrollToTopButton: React.JSXElementConstructor<Props> = (
   props: Props
 ) => {
-  const classes = useStyles();
+  const classes = useStyles(props as any);
   const { children, window } = props;
 
   const trigger = useScrollTrigger({

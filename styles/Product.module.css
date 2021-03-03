@@ -20,6 +20,12 @@
   height: 80%;
   max-width: 500px;
 }
+.topCont {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 .InfoCont {
   height: 100%;
@@ -45,9 +51,19 @@
   align-items: center;
 }
 
-.topCont {
-  width: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+@media only screen and (max-width: 650px) {
+  .page {
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+  .imageCont,
+  .InfoCont {
+    width: 100%;
+  }
+  .InfoContInner > h1 {
+    margin: 0;
+  }
+  .btnCont {
+    width: 100%;
+  }
 }
