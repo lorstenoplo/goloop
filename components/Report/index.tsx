@@ -26,6 +26,7 @@ import React, { useState } from "react";
 import { useReportMutation } from "../../src/generated/graphql";
 import LoadingScreen from "../LoadingScreen";
 import { useStateValue } from "../../context/StateProvider";
+import useGetUser from "../../utils/useGetUser";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,17 +58,12 @@ const Report: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
   const [{ data, error }, report] = useReportMutation();
-  const { state } = useStateValue();
   const router = useRouter();
 
-  const username = state.user?.username!;
+  const [user] = useGetUser();
 
   if (error) {
     return <p>{error.message}</p>;
-  }
-
-  if (data?.report) {
-    router.push("/");
   }
 
   const handleClickOpen = () => {
@@ -110,7 +106,10 @@ const Report: React.FC = () => {
               <Button
                 autoFocus
                 color="inherit"
-                onClick={() => report({ username, problem: input })}
+                onClick={() => {
+                  report({ username: user?.username || "", problem: input });
+                  data?.report && handleClose();
+                }}
               >
                 <SendRoundedIcon />
               </Button>

@@ -1,33 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { useMeQuery } from "../src/generated/graphql";
-import { useStateValue } from "../context/StateProvider";
-import { LoadingScreen } from "../components";
+import { useState, useEffect, useMemo } from "react";
+import { useMeQuery, MeQuery } from "../src/generated/graphql";
+import { CombinedError } from "urql";
 
-const useGetUser = () => {
+type getUserHookType<T, E> = [T | undefined, boolean, E | undefined];
+
+type getUserHookReturnType = getUserHookType<MeQuery["me"], CombinedError>;
+
+const useGetUser = (): getUserHookReturnType => {
   const [qid, setQid] = useState<string>("");
 
   useEffect(() => {
     setQid(localStorage.getItem("qid") || "");
   }, []);
 
-  const [{ fetching, data }] = useMeQuery({
+  const [{ fetching, data, error }] = useMeQuery({
     variables: { token: qid },
   });
 
-  const { state, dispatch } = useStateValue();
+  const user = data?.me;
 
-  useEffect(() => {
-    if (!fetching && data?.me) {
-      dispatch({
-        type: "SET_USER",
-        value: data.me,
-      });
-    }
-  }, [dispatch]);
+  const resArray: getUserHookReturnType = [user, fetching, error];
 
-  const username = state.user?.username;
-
-  return [username];
+  return useMemo<getUserHookReturnType>(() => resArray, resArray);
 };
 
 export default useGetUser;

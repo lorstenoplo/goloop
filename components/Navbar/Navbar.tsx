@@ -1,36 +1,32 @@
-import React, { useEffect, useState } from "react";
 import {
   AppBar,
-  Toolbar,
+  Badge,
   IconButton,
-  Typography,
   InputBase,
   Menu,
   MenuItem,
-  Badge,
-  Zoom,
+  Toolbar,
   Tooltip,
+  Typography,
+  useScrollTrigger,
+  Zoom,
 } from "@material-ui/core";
+import { fade, makeStyles } from "@material-ui/core/styles";
 import { AccountCircle } from "@material-ui/icons";
-import SearchIcon from "@material-ui/icons/Search";
 import MenuIcon from "@material-ui/icons/Menu";
-import NextLink from "next/link";
-import { cloneElement } from "react";
-import { useScrollTrigger } from "@material-ui/core";
-import { Props } from "../../types/HomePageProps";
-import { useMeQuery } from "../../src/generated/graphql";
-import { useRouter } from "next/router";
+import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
-import LoadingScreen from "../LoadingScreen";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import React, { cloneElement } from "react";
+import { useStateValue } from "../../context/StateProvider";
+import { Props } from "../../types/HomePageProps";
+import useGetUser from "../../utils/useGetUser";
+import SideBar from "../SideBar";
 
 interface NavbarProps {
   color?: string;
 }
-
-import { makeStyles, fade } from "@material-ui/core/styles";
-import SideBar from "../SideBar";
-import { useStateValue } from "../../context/StateProvider";
-import useGetUser from "../../utils/useGetUser";
 
 export const useStyles = makeStyles(
   (theme) =>
@@ -126,12 +122,16 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const { state } = useStateValue();
-  const [username] = useGetUser();
+  const [user, fetching, error] = useGetUser();
 
   const router = useRouter();
 
+  if (fetching) return <LoadingScreen />;
+
+  if (error) return <p>{error.message}</p>;
+
   let UserBody = () => <></>;
-  if (!state.user) {
+  if (!user) {
     // user is logged out
     UserBody = () => (
       <>
@@ -152,7 +152,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     // user is logged in
     UserBody = () => (
       <>
-        <MenuItem>{state.user?.username}</MenuItem>
+        <MenuItem>{user?.username}</MenuItem>
         <MenuItem
           onClick={() => {
             localStorage.removeItem("qid");
