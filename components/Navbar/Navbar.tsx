@@ -30,6 +30,7 @@ interface NavbarProps {
 import { makeStyles, fade } from "@material-ui/core/styles";
 import SideBar from "../SideBar";
 import { useStateValue } from "../../context/StateProvider";
+import useGetUser from "../../utils/useGetUser";
 
 export const useStyles = makeStyles(
   (theme) =>
@@ -121,35 +122,16 @@ const ElevationScroll = (props: Props) => {
 };
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const [qid, setQid] = useState<string>("");
-  useEffect(() => {
-    setQid(localStorage.getItem("qid") || "");
-  }, []);
   const classes = useStyles(props);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [{ fetching, data }] = useMeQuery({
-    variables: { token: qid },
-  });
 
-  const { state, dispatch } = useStateValue();
-  //  console.log(state);
-  useEffect(() => {
-    if (!fetching) {
-      dispatch({
-        type: "SET_USER",
-        value: data?.me,
-      });
-    }
-  }, [dispatch]);
+  const { state } = useStateValue();
+  const [username] = useGetUser();
 
   const router = useRouter();
 
   let UserBody = () => <></>;
-  if (fetching) {
-    // data is loading
-    // console.log("loading");
-    return <LoadingScreen />;
-  } else if (!data?.me) {
+  if (!state.user) {
     // user is logged out
     UserBody = () => (
       <>
@@ -170,7 +152,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     // user is logged in
     UserBody = () => (
       <>
-        <MenuItem>{data?.me?.username}</MenuItem>
+        <MenuItem>{state.user?.username}</MenuItem>
         <MenuItem
           onClick={() => {
             localStorage.removeItem("qid");

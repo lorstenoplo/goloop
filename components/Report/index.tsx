@@ -36,6 +36,12 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: theme.spacing(2),
       flex: 1,
     },
+    additionalInfo: {
+      padding: "10px",
+      [theme.breakpoints.down("md")]: {
+        display: "none",
+      },
+    },
   })
 );
 
@@ -50,16 +56,11 @@ const Report: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
-  const [{ data, error, fetching }, report] = useReportMutation();
+  const [{ data, error }, report] = useReportMutation();
   const { state } = useStateValue();
   const router = useRouter();
 
   const username = state.user?.username!;
-  //console.log(username);
-
-  if (fetching) {
-    return <LoadingScreen />;
-  }
 
   if (error) {
     return <p>{error.message}</p>;
@@ -90,6 +91,7 @@ const Report: React.FC = () => {
         onClose={handleClose}
         TransitionComponent={Transition}
         disableEnforceFocus
+        scroll="paper"
       >
         <AppBar className={classes.appBar}>
           <Toolbar>
@@ -141,7 +143,7 @@ const Report: React.FC = () => {
             <ListItemText primary="Default Procedure" secondary="About" />
           </ListItem>
         </List>
-        <Typography style={{ padding: "10px" }} variant="body2">
+        <Typography className={classes.additionalInfo} variant="body2">
           Go to the Legal Help page to request content changes for legal
           reasons. Some account and system information may be sent to GooLoop.
           We will use the information that you give us to help address technical

@@ -46,16 +46,19 @@ const Cart: React.FC = () => {
               display="flex"
               justifyContent="space-between"
               alignItems="center"
+              mb={2}
             >
               <CartOptions.Title>Guest Checkout</CartOptions.Title>
               <EditRoundedIcon />
             </Box>
             <CartOptions.Info>
+              <Box color="purple" mr={1}>
+                <AlternateEmailRoundedIcon fontSize="small" />
+              </Box>
               <CartOptions.SubTitle>
                 {/* {state.user?.username || "Guest"} */}
-                guset
+                guest@adam.co
               </CartOptions.SubTitle>
-              <AlternateEmailRoundedIcon />
             </CartOptions.Info>
           </CartOptions>
         </Box>

@@ -2,7 +2,7 @@
   background-color: #fff;
   display: flex !important;
   padding: 10px;
-  min-height: calc(100vh -64px);
+  min-height: calc(100vh - 64px);
 }
 
 .cartProduct {
@@ -42,4 +42,5 @@
   flex-direction: column;
   justify-content: space-evenly;
   border-radius: 8px;
+  width: 400px;
 }
