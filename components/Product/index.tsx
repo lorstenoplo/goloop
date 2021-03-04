@@ -1,9 +1,8 @@
+import { motion } from "framer-motion";
 import React from "react";
 import styles from "../../styles/Home.module.css";
-import { ProductProps } from "./types";
-import { motion } from "framer-motion";
 import { fadeInUp } from "../../utils/staggerAnimationHelper";
-import truncate from "../../utils/truncate";
+import { ProductProps } from "./types";
 
 const Product: React.FC<ProductProps> = ({ imageURL, price, title }) => {
   return (
@@ -23,7 +22,7 @@ const Product: React.FC<ProductProps> = ({ imageURL, price, title }) => {
         alt={title}
       />
       <div className={styles.productInfo}>
-        <h3>{truncate(title, 30)}</h3>
+        <h3>{title}</h3>
         <p className={styles.price}>${price}</p>
       </div>
     </motion.div>

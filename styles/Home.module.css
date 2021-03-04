@@ -16,6 +16,10 @@
 }
 
 /* Product */
+.link {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .product {
   width: 450px;
   background: #fff;

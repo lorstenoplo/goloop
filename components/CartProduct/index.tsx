@@ -6,6 +6,7 @@ import { Box, Tooltip, Zoom, IconButton } from "@material-ui/core";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import { useStateValue } from "../../context/StateProvider";
 import { fadeInUp } from "../../utils/staggerAnimationHelper";
+import truncate from "../../utils/truncate";
 
 const CartProduct: React.FC<Product> = ({ id, imageURL, title, price }) => {
   const { dispatch } = useStateValue();
@@ -24,7 +25,10 @@ const CartProduct: React.FC<Product> = ({ id, imageURL, title, price }) => {
       >
         <img className={styles.image} src={imageURL} alt={title} />
 
-        <Tooltip TransitionComponent={Zoom} title={`Remove ${title} from cart`}>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={`Remove ${truncate(title, 12)} from cart`}
+        >
           <IconButton
             onClick={() =>
               dispatch({
@@ -44,7 +48,7 @@ const CartProduct: React.FC<Product> = ({ id, imageURL, title, price }) => {
         justifyContent="space-between"
         width="100%"
       >
-        <b>{title}</b>
+        <b>{truncate(title, 10)}</b>
         <p> ${price} </p>
       </Box>
     </motion.div>

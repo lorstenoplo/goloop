@@ -46,6 +46,7 @@
   .page {
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
   }
   .productsContainer {
     align-items: center;

@@ -75,7 +75,7 @@ const Index: React.FC = () => {
                   href="/products/[productId]"
                   as={`/products/${id}`}
                 >
-                  <a>
+                  <a className={styles.link}>
                     <Product
                       key={id}
                       id={id}
