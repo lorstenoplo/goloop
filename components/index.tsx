@@ -7,4 +7,5 @@ export { default as Product } from "./Product";
 export { default as SideBar } from "./SideBar";
 export { default as Report } from "./Report";
 export { default as CartProduct } from "./CartProduct";
-export { default as CartOptions } from "./CartOptions";
+export { default as CartOption } from "./CartOption";
+export { default as CartOptionsSection } from "./CartOptionsSection";

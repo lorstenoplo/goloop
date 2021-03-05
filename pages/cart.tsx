@@ -3,12 +3,15 @@ import { motion } from "framer-motion";
 import { withUrqlClient } from "next-urql";
 import Head from "next/head";
 import React from "react";
-import { CartProduct, Layout, CartOptions } from "../components";
+import {
+  CartProduct,
+  Layout,
+  CartOption,
+  CartOptionsSection,
+} from "../components";
 import { useStateValue } from "../context/StateProvider";
 import styles from "../styles/Cart.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
-import EditRoundedIcon from "@material-ui/icons/EditRounded";
-import AlternateEmailRoundedIcon from "@material-ui/icons/AlternateEmailRounded";
 
 const Cart: React.FC = () => {
   const { state } = useStateValue();
@@ -39,29 +42,7 @@ const Cart: React.FC = () => {
             />
           ))}
         </motion.div>
-
-        <Box>
-          <CartOptions>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              mb={2}
-            >
-              <CartOptions.Title>Guest Checkout</CartOptions.Title>
-              <EditRoundedIcon />
-            </Box>
-            <CartOptions.Info>
-              <Box color="purple" mr={1}>
-                <AlternateEmailRoundedIcon fontSize="small" />
-              </Box>
-              <CartOptions.SubTitle>
-                {/* {state.user?.username || "Guest"} */}
-                guest@adam.co
-              </CartOptions.SubTitle>
-            </CartOptions.Info>
-          </CartOptions>
-        </Box>
+        <CartOptionsSection />
       </Layout>
     </motion.div>
   );

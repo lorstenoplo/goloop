@@ -51,10 +51,10 @@
   .productsContainer {
     align-items: center;
     width: 100%;
-    padding: 20px;
+    padding: 22px;
   }
   .image {
-    height: 150px;
+    height: 100px;
   }
   .optionsContainer {
     width: 95vw;

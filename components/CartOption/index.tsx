@@ -9,23 +9,23 @@ type subComponentType = {
   Info: any;
 };
 
-const CartOptions: React.FC & subComponentType = ({ children }) => {
+const CartOption: React.FC & subComponentType = ({ children }) => {
   return (
     <motion.div className={classes.optionsContainer}>{children}</motion.div>
   );
 };
 
-CartOptions.Title = function CartOptionsTitle({ children }: any) {
+CartOption.Title = function CartOptionsTitle({ children }: any) {
   return <Typography variant="body1">{children}</Typography>;
 };
-CartOptions.SubTitle = function CartOptionsSubTitle({ children }: any) {
+CartOption.SubTitle = function CartOptionsSubTitle({ children }: any) {
   return (
     <Typography variant="subtitle1" color="textSecondary">
       {children}
     </Typography>
   );
 };
-CartOptions.Info = function CartOptionsInfo({ children }: any) {
+CartOption.Info = function CartOptionsInfo({ children }: any) {
   return (
     <Box display="flex" alignItems="center">
       {children}
@@ -33,4 +33,4 @@ CartOptions.Info = function CartOptionsInfo({ children }: any) {
   );
 };
 
-export default CartOptions;
+export default CartOption;
