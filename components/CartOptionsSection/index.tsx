@@ -8,11 +8,13 @@ import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined"
 import useGetUser from "../../utils/useGetUser";
 import PersonPinCircleOutlinedIcon from "@material-ui/icons/PersonPinCircleOutlined";
 import PhoneOutlinedIcon from "@material-ui/icons/PhoneOutlined";
+import useStyles from "./styles";
 
 const CartOptionsSection: React.FC<CartOptionsSectionPropsType> = () => {
   const [user] = useGetUser();
+  const classes = useStyles();
   return (
-    <Box>
+    <Box className={classes.container}>
       <CartOption>
         <Box
           display="flex"
@@ -41,23 +43,27 @@ const CartOptionsSection: React.FC<CartOptionsSectionPropsType> = () => {
         >
           <CartOption.Title>Shipping Information</CartOption.Title>
           <EditRoundedIcon />
-          <CartOption.Info>
-            <Box color="purple" mr={1}>
-              <AccountCircleOutlinedIcon fontSize="small" />
-            </Box>
-            <CartOption.SubTitle>{user?.username}</CartOption.SubTitle>
-            <Box color="purple" mr={1}>
-              <PersonPinCircleOutlinedIcon fontSize="small" />
-            </Box>
-            <CartOption.SubTitle>
-              React lane, 123# cross, Mumbai
-            </CartOption.SubTitle>
-            <Box color="purple" mr={1}>
-              <PhoneOutlinedIcon fontSize="small" />
-            </Box>
-            <CartOption.SubTitle>403-4343-332-222</CartOption.SubTitle>
-          </CartOption.Info>
         </Box>
+        <CartOption.Info>
+          <Box color="purple" mr={1}>
+            <AccountCircleOutlinedIcon fontSize="small" />
+          </Box>
+          <CartOption.SubTitle>{user?.username}</CartOption.SubTitle>
+        </CartOption.Info>
+        <CartOption.Info>
+          <Box color="purple" mr={1}>
+            <PersonPinCircleOutlinedIcon fontSize="small" />
+          </Box>
+          <CartOption.SubTitle>
+            React lane, 123# cross, Mumbai
+          </CartOption.SubTitle>
+        </CartOption.Info>
+        <CartOption.Info>
+          <Box color="purple" mr={1}>
+            <PhoneOutlinedIcon fontSize="small" />
+          </Box>
+          <CartOption.SubTitle>403-4343-332-222</CartOption.SubTitle>
+        </CartOption.Info>
       </CartOption>
     </Box>
   );
