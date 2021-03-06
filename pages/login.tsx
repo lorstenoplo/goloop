@@ -58,6 +58,7 @@ const Login: React.FC<loginProps> = () => {
                 alignItems="center"
                 flexDirection="column"
                 paddingY="30px"
+                display="flex"
               >
                 <Link href="/">
                   <a>
@@ -79,7 +80,15 @@ const Login: React.FC<loginProps> = () => {
                   label="Password"
                   value={values.password}
                 />
-                <Box margin={1}>
+                <Box my={2} width="100%">
+                  <Typography variant="body2">
+                    New to the store{" "}
+                    <Link href="/register">
+                      <a style={{ color: "#00b6f1" }}>register first</a>
+                    </Link>
+                  </Typography>
+                </Box>
+                <Box width="100%" margin={1}>
                   <Button
                     variant="contained"
                     color="primary"

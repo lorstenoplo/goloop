@@ -90,9 +90,21 @@ const Register: React.FC<registerProps> = () => {
                   >
                     Register
                     {isSubmitting && (
-                      <CircularProgress size={15} color="primary" />
+                      <CircularProgress
+                        style={{ marginLeft: 10 }}
+                        size={15}
+                        color="primary"
+                      />
                     )}
                   </Button>
+                  <Box width="100%">
+                    <Typography variant="body2">
+                      Already got an account{" "}
+                      <Link href="/login">
+                        <a style={{ color: "#00b6f1" }}>login</a>
+                      </Link>
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
             </Form>
