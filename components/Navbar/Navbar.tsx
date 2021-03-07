@@ -136,15 +136,11 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     // user is logged out
     UserBody = () => (
       <>
-        <MenuItem>
-          <NextLink href="/login">
-            <a>Login</a>
-          </NextLink>
+        <MenuItem button onClick={() => router.push("/login")}>
+          Login
         </MenuItem>
-        <MenuItem>
-          <NextLink href="/register">
-            <a>Register</a>
-          </NextLink>
+        <MenuItem button onClick={() => router.push("/register")}>
+          Register
         </MenuItem>
       </>
     );

@@ -58,7 +58,8 @@ const Register: React.FC<registerProps> = () => {
                 alignItems="center"
                 flexDirection="column"
                 paddingY="30px"
-                height="100%"
+                display="flex"
+                minHeight="100vh"
               >
                 <Link href="/">
                   <a>
@@ -80,7 +81,7 @@ const Register: React.FC<registerProps> = () => {
                   label="Password"
                   value={values.password}
                 />
-                <Box margin={1}>
+                <Box width="100%" margin={1}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -97,7 +98,7 @@ const Register: React.FC<registerProps> = () => {
                       />
                     )}
                   </Button>
-                  <Box width="100%">
+                  <Box my={2} width="100%">
                     <Typography variant="body2">
                       Already got an account{" "}
                       <Link href="/login">

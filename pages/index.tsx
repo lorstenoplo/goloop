@@ -1,21 +1,15 @@
 import Box from "@material-ui/core/Box";
-import Fab from "@material-ui/core/Fab";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { motion } from "framer-motion";
 import { withUrqlClient } from "next-urql";
 import Head from "next/head";
 import Link from "next/link";
-import {
-  Layout,
-  LoadingScreen,
-  Product,
-  ScrollToTopButton,
-} from "../components";
+import { Layout, LoadingScreen, Product } from "../components";
 import { useProductsQuery } from "../src/generated/graphql";
 import styles from "../styles/Home.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
 import React from "react";
 import { makeStyles } from "@material-ui/core";
+import ScrollToTop from "../utils/ScrollToTop";
 
 const useStyles = makeStyles((theme) => ({
   productsContainer: {
@@ -90,11 +84,7 @@ const Index: React.FC = () => {
           </Box>
         </motion.div>
       </Layout>
-      <ScrollToTopButton>
-        <Fab color="secondary" size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon />
-        </Fab>
-      </ScrollToTopButton>
+      <ScrollToTop />
     </motion.div>
   );
 };

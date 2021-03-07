@@ -59,6 +59,7 @@ const Login: React.FC<loginProps> = () => {
                 flexDirection="column"
                 paddingY="30px"
                 display="flex"
+                minHeight="100vh"
               >
                 <Link href="/">
                   <a>

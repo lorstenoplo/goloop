@@ -16,14 +16,10 @@ const CartOption: React.FC & subComponentType = ({ children }) => {
 };
 
 CartOption.Title = function CartOptionsTitle({ children }: any) {
-  return <Typography variant="body1">{children}</Typography>;
+  return <Typography variant="h6">{children}</Typography>;
 };
 CartOption.SubTitle = function CartOptionsSubTitle({ children }: any) {
-  return (
-    <Typography variant="subtitle1" color="textSecondary">
-      {children}
-    </Typography>
-  );
+  return <Typography variant="subtitle1">{children}</Typography>;
 };
 CartOption.Info = function CartOptionsInfo({ children }: any) {
   return (

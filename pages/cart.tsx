@@ -12,6 +12,7 @@ import {
 import { useStateValue } from "../context/StateProvider";
 import styles from "../styles/Cart.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
+import ScrollToTop from "../utils/ScrollToTop";
 
 const Cart: React.FC = () => {
   const { state } = useStateValue();
@@ -44,6 +45,7 @@ const Cart: React.FC = () => {
         </motion.div>
         <CartOptionsSection />
       </Layout>
+      <ScrollToTop />
     </motion.div>
   );
 };

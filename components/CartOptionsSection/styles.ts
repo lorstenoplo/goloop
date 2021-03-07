@@ -7,6 +7,12 @@ const useStyles = makeStyles((theme) => ({
       alignItems: "center",
       flexDirection: "column",
     },
+    padding: "17px 0px",
+  },
+  btnCont: {
+    [theme.breakpoints.down("md")]: {
+      justifyContent: "flex-start",
+    },
   },
 }));
 export default useStyles;
