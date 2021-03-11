@@ -9,6 +9,7 @@ import useGetUser from "../../utils/useGetUser";
 import PersonPinCircleOutlinedIcon from "@material-ui/icons/PersonPinCircleOutlined";
 import PhoneOutlinedIcon from "@material-ui/icons/PhoneOutlined";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
+import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import useStyles from "./styles";
 
 const CartOptionsSection: React.FC<CartOptionsSectionPropsType> = () => {
@@ -81,6 +82,12 @@ const CartOptionsSection: React.FC<CartOptionsSectionPropsType> = () => {
             <CreditCardIcon fontSize="small" />
           </Box>
           <CartOption.SubTitle>424242424242424</CartOption.SubTitle>
+        </CartOption.Info>
+        <CartOption.Info>
+          <Box color="rgb(117 0 245)" mr={1}>
+            <CheckRoundedIcon fontSize="small" />
+          </Box>
+          <CartOption.SubTitle>Used shipping address</CartOption.SubTitle>
         </CartOption.Info>
       </CartOption>
       <Box
