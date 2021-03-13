@@ -8,16 +8,8 @@ import { useProductsQuery } from "../src/generated/graphql";
 import styles from "../styles/Home.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
 import React from "react";
-import { makeStyles } from "@material-ui/core";
 import ScrollToTop from "../utils/ScrollToTop";
-
-const useStyles = makeStyles((theme) => ({
-  productsContainer: {
-    [theme.breakpoints.down("md")]: {
-      justifyContent: "center",
-    },
-  },
-}));
+import useStyles from "../mui-styles/Home_Styles";
 
 const Index: React.FC = () => {
   const [{ data, fetching, error }] = useProductsQuery();
@@ -44,14 +36,14 @@ const Index: React.FC = () => {
       initial="initial"
       animate="animate"
       exit={{ opacity: 0 }}
-      className={styles.container}
+      className={classes.container}
     >
       <Head>
         <title>GoLoop</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout className={styles.body}>
-        <motion.div className={styles.innerCont} variants={stagger}>
+      <Layout className={classes.body}>
+        <motion.div variants={stagger}>
           <Box
             mx="auto"
             justifyContent="space-between"

@@ -16,6 +16,8 @@ import PaymentIcon from "@material-ui/icons/Payment";
 import ReportIcon from "@material-ui/icons/Report";
 import { useRouter } from "next/router";
 import Report from "../Report";
+import useGetUser from "../../utils/useGetUser";
+import LoadingScreen from "../LoadingScreen";
 
 type listProps = {
   toggleDrawer: (
@@ -24,8 +26,17 @@ type listProps = {
   classes: Record<"list" | "fullList" | "menuButton", string>;
 };
 
-const CustomList: React.FC<listProps> = ({ toggleDrawer, classes }) => {
+const CustomList: React.FC<listProps> = ({ classes }) => {
   const router = useRouter();
+  const [user, fetching, error] = useGetUser();
+
+  if (fetching) {
+    return <LoadingScreen />;
+  }
+
+  if (error) {
+    return <p color="red">{error.message}</p>;
+  }
 
   return (
     <div

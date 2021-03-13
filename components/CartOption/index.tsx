@@ -1,7 +1,7 @@
 import React from "react";
-import classes from "../../styles/Cart.module.css";
 import { motion } from "framer-motion";
 import { Typography, Box } from "@material-ui/core";
+import useStyles from "../../mui-styles/Cart_Styles";
 
 type subComponentType = {
   Title: any;
@@ -10,6 +10,7 @@ type subComponentType = {
 };
 
 const CartOption: React.FC & subComponentType = ({ children }) => {
+  const classes = useStyles();
   return (
     <motion.div className={classes.optionsContainer}>{children}</motion.div>
   );

@@ -10,13 +10,13 @@ import {
   CartOptionsSection,
 } from "../components";
 import { useStateValue } from "../context/StateProvider";
-import styles from "../styles/Cart.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
 import ScrollToTop from "../utils/ScrollToTop";
+import useStyles from "../mui-styles/Cart_Styles";
 
 const Cart: React.FC = () => {
   const { state } = useStateValue();
-
+  const classes = useStyles();
   const stagger = {
     animate: {
       transition: {
@@ -30,8 +30,8 @@ const Cart: React.FC = () => {
       <Head>
         <title>Cart | Review your items in cart</title>
       </Head>
-      <Layout navColor="#fff" className={styles.page}>
-        <motion.div className={styles.productsContainer} variants={stagger}>
+      <Layout navColor="#fff" className={classes.page}>
+        <motion.div className={classes.productsContainer} variants={stagger}>
           {state.basket.map(({ id, title, imageURL, price, rating }, i) => (
             <CartProduct
               key={i}

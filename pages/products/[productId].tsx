@@ -1,5 +1,4 @@
 import { LoadingScreen } from "../../components";
-import styles from "../../styles/Product.module.css";
 import { withUrqlClient, NextComponentType } from "next-urql";
 import { CreateUrqlClient } from "../../utils/createUrqlClient";
 import { useProductQuery } from "../../src/generated/graphql";
@@ -9,8 +8,8 @@ import Link from "next/link";
 import { Button, Tooltip, Zoom, IconButton, Badge } from "@material-ui/core";
 import { useStateValue } from "../../context/StateProvider";
 import { useRouter } from "next/router";
-import classes from "../../styles/Product.module.css";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import useStyles from "../../mui-styles/Product_Styles";
 
 const ProductPage: NextComponentType<
   { query: any; AppTree: any; pathname: string },
@@ -22,6 +21,8 @@ const ProductPage: NextComponentType<
       productId,
     },
   });
+
+  const classes = useStyles();
 
   const { dispatch, state } = useStateValue();
   const router = useRouter();
@@ -76,7 +77,7 @@ const ProductPage: NextComponentType<
 
   return (
     <motion.div
-      className={styles.page}
+      className={classes.page}
       initial="initial"
       animate="animate"
       exit={{ opacity: 0 }}
@@ -88,7 +89,7 @@ const ProductPage: NextComponentType<
       <motion.div
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
-        className={styles.imageCont}
+        className={classes.imageCont}
       >
         <motion.img
           src={data?.product?.imageURL}
@@ -97,12 +98,13 @@ const ProductPage: NextComponentType<
           initial={{ x: 200, opacity: 0 }}
           exit={{ opacity: 0 }}
           transition={{ delay: 0.2 }}
+          className={classes.img}
         />
       </motion.div>
 
-      <div className={styles.InfoCont}>
-        <motion.div className={styles.InfoContInner} variants={stagger}>
-          <motion.div className={styles.topCont} variants={fadeInUp}>
+      <div className={classes.InfoCont}>
+        <motion.div className={classes.InfoContInner} variants={stagger}>
+          <motion.div className={classes.topCont} variants={fadeInUp}>
             <Link scroll={false} href="/">
               <a>Back to products</a>
             </Link>
@@ -111,7 +113,6 @@ const ProductPage: NextComponentType<
                 aria-label="cart"
                 aria-controls="menu-appbar"
                 aria-haspopup="false"
-                className={classes.accountIcon}
                 onClick={() => state.basket.length > 0 && router.push("/cart")}
               >
                 <Badge badgeContent={state.basket.length} color="secondary">
@@ -121,13 +122,13 @@ const ProductPage: NextComponentType<
             </Tooltip>
           </motion.div>
           <motion.h1 variants={fadeInUp}>{data?.product?.title}</motion.h1>
-          <motion.p className={styles.productInfo} variants={fadeInUp}>
+          <motion.p className={classes.productInfo} variants={fadeInUp}>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
             suscipit quaerat quod, accusantium ipsa eum officiis quam, accusamus
             sapiente amet sequi, quos quas qui aliquid. Aperiam enim rem fugit
             odit.
           </motion.p>
-          <motion.div className={styles.btnCont} variants={fadeInUp}>
+          <motion.div className={classes.btnCont} variants={fadeInUp}>
             <Button
               onClick={addToBasket}
               disableElevation

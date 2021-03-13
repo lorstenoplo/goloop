@@ -149,6 +149,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     // user is logged in
     UserBody = () => (
       <>
+        <MenuItem button onClick={() => router.push("/account")}>
+          My account
+        </MenuItem>
         <MenuItem>{user?.username}</MenuItem>
         <MenuItem
           onClick={() => {
@@ -183,7 +186,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem>My account</MenuItem>
       <UserBody />
     </Menu>
   );
