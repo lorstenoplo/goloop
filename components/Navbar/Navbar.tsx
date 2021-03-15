@@ -43,7 +43,7 @@ export const useStyles = makeStyles(
         flexGrow: 1,
         display: "none",
         color: "black",
-        [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up("md")]: {
           display: "block",
         },
       },
@@ -90,7 +90,7 @@ export const useStyles = makeStyles(
         marginLeft: 0,
         marginRight: 20,
         width: "100%",
-        [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up("md")]: {
           marginLeft: theme.spacing(1),
           width: "auto",
         },
