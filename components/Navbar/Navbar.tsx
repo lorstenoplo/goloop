@@ -10,6 +10,7 @@ import {
   Typography,
   useScrollTrigger,
   Zoom,
+  CircularProgress,
 } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { AccountCircle } from "@material-ui/icons";
@@ -23,7 +24,7 @@ import { useStateValue } from "../../context/StateProvider";
 import { Props } from "../../types/HomePageProps";
 import useGetUser from "../../utils/useGetUser";
 import SideBar from "../SideBar";
-import LoadingScreen from "../LoadingScreen";
+import { green, blue } from "@material-ui/core/colors";
 
 interface NavbarProps {
   color?: string;
@@ -100,6 +101,14 @@ export const useStyles = makeStyles(
       },
       accountIcon: {
         color: "black",
+        position: "relative",
+      },
+      authProgress: {
+        color: blue[500],
+        position: "absolute",
+        top: 9,
+        left: 9,
+        zIndex: 1,
       },
     } as const)
 );
@@ -124,7 +133,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 
   const { state } = useStateValue();
   const [user, fetching, error] = useGetUser();
-
   const router = useRouter();
 
   //if (fetching) return <LoadingScreen />;
@@ -241,6 +249,13 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             onClick={handleProfileMenuOpen}
           >
             <AccountCircle />
+            {fetching && (
+              <CircularProgress
+                size={30}
+                thickness={3}
+                className={classes.authProgress}
+              />
+            )}
           </IconButton>
         </Toolbar>
         {renderMenu}

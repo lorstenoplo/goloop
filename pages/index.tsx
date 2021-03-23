@@ -14,7 +14,6 @@ import Skeleton from "@material-ui/lab/Skeleton";
 
 const Index: React.FC = () => {
   const [{ data, fetching, error }] = useProductsQuery();
-
   const classes = useStyles();
 
   if (error) {
@@ -59,7 +58,11 @@ const Index: React.FC = () => {
                   height={400}
                   width={450}
                   animation="wave"
-                  style={{ borderRadius: "12px" }}
+                  style={{
+                    borderRadius: "12px",
+                    marginBottom: 10,
+                    marginTop: 10,
+                  }}
                   key={i}
                 />
               ))}
