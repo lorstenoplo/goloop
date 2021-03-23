@@ -6,6 +6,11 @@ import { motion } from "framer-motion";
 import "react-credit-cards/es/styles-compiled.css";
 import { Layout } from "../components";
 import Head from "next/head";
+import {
+  formatCreditCardNumber,
+  formatExpirationDate,
+  formatCVC,
+} from "../utils/cardDataValidaters";
 
 type cardStateType = {
   cvc: React.ReactText;
@@ -13,6 +18,7 @@ type cardStateType = {
   focus?: "number" | "cvc" | "expiry" | "name";
   name: string;
   number: React.ReactText;
+  issuer: string;
 };
 
 const payment = () => {
@@ -21,7 +27,16 @@ const payment = () => {
     expiry: "",
     name: "",
     number: "",
+    issuer: "",
   });
+
+  const handleCallback = ({ issuer }: { issuer: string }, isValid: boolean) => {
+    if (isValid) {
+      setCardState((ps) => {
+        return { ...ps, issuer };
+      });
+    }
+  };
 
   const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setCardState((ps) => {
@@ -30,7 +45,15 @@ const payment = () => {
   };
 
   const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+
+    if (name === "number") {
+      value = formatCreditCardNumber(value);
+    } else if (name === "expiry") {
+      value = formatExpirationDate(value);
+    } else if (name === "cvc") {
+      value = formatCVC(value);
+    }
 
     setCardState((ps) => {
       return { ...ps, [name]: value };
@@ -54,35 +77,43 @@ const payment = () => {
           focused={cardState.focus}
           name={cardState.name}
           number={cardState.number}
+          callback={handleCallback}
         />
         <form>
           <input
             type="tel"
             name="number"
             placeholder="Card Number"
-            onChange={handleInputChange}
+            onInput={handleInputChange}
             onFocus={handleInputFocus}
+            pattern="[\d| ]{16,22}"
+            value={cardState.number}
           />
           <input
             type="text"
             name="name"
             placeholder="Enter your Name"
-            onChange={handleInputChange}
             onFocus={handleInputFocus}
+            onInput={handleInputChange}
+            value={cardState.name}
           />
           <input
-            type="number"
+            type="tel"
             name="cvc"
             placeholder="CVC"
-            onChange={handleInputChange}
             onFocus={handleInputFocus}
+            pattern="\d{3,4}"
+            value={cardState.cvc}
+            onInput={handleInputChange}
           />
           <input
-            type="expiry"
-            name="date"
+            type="tel"
+            name="expiry"
             placeholder="Expiry"
-            onChange={handleInputChange}
             onFocus={handleInputFocus}
+            pattern="\d\d/\d\d"
+            value={cardState.expiry}
+            onInput={handleInputChange}
           />
         </form>
       </Layout>

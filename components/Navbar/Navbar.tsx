@@ -127,7 +127,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 
   const router = useRouter();
 
-  if (fetching) return <LoadingScreen />;
+  //if (fetching) return <LoadingScreen />;
 
   if (error) return <p>{error.message}</p>;
 

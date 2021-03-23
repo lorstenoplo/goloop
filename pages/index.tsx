@@ -10,15 +10,13 @@ import { CreateUrqlClient } from "../utils/createUrqlClient";
 import React from "react";
 import ScrollToTop from "../utils/ScrollToTop";
 import useStyles from "../mui-styles/Home_Styles";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const Index: React.FC = () => {
   const [{ data, fetching, error }] = useProductsQuery();
 
   const classes = useStyles();
 
-  if (fetching) {
-    return <LoadingScreen />;
-  }
   if (error) {
     return <div style={{ color: "red" }}>{error.message}</div>;
   }
@@ -54,6 +52,18 @@ const Index: React.FC = () => {
             alignItems="center"
             className={classes.productsContainer}
           >
+            {fetching &&
+              [1, 2, 3, 4, 5, 6].map((_, i) => (
+                <Skeleton
+                  variant="rect"
+                  height={400}
+                  width={450}
+                  animation="wave"
+                  style={{ borderRadius: "12px" }}
+                  key={i}
+                />
+              ))}
+
             {data &&
               data.products.map(({ id, imageURL, price, rating, title }) => (
                 <Link
