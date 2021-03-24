@@ -36,7 +36,7 @@ const Login: React.FC<loginProps> = () => {
         </Head>
         <Formik
           initialValues={{
-            username: "",
+            emailOrUsername: "",
             password: "",
           }}
           onSubmit={async (values, { setErrors }) => {
@@ -70,9 +70,9 @@ const Login: React.FC<loginProps> = () => {
                 </Link>
                 <InputField
                   onChange={handleChange}
-                  name="username"
-                  label="Username"
-                  value={values.username}
+                  name="emailOrUsername"
+                  label="Email or Username"
+                  value={values.emailOrUsername}
                 />
                 <InputField
                   onChange={handleChange}

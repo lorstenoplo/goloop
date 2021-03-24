@@ -36,6 +36,7 @@ const Register: React.FC<registerProps> = () => {
         </Head>
         <Formik
           initialValues={{
+            email: "",
             username: "",
             password: "",
           }}
@@ -68,6 +69,12 @@ const Register: React.FC<registerProps> = () => {
                     </Typography>
                   </a>
                 </Link>
+                <InputField
+                  onChange={handleChange}
+                  name="email"
+                  label="Email"
+                  value={values.email}
+                />
                 <InputField
                   onChange={handleChange}
                   name="username"

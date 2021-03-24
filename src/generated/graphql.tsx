@@ -45,6 +45,7 @@ export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
   username: Scalars['String'];
+  email: Scalars['String'];
   createdAt: Scalars['String'];
   password: Scalars['String'];
 };
@@ -80,12 +81,13 @@ export type MutationReportArgs = {
 
 
 export type MutationRegisterArgs = {
-  options: UsernamePasswordInput;
+  options: RegisterInput;
 };
 
 
 export type MutationLoginArgs = {
-  options: UsernamePasswordInput;
+  password: Scalars['String'];
+  emailOrUsername: Scalars['String'];
 };
 
 
@@ -106,13 +108,14 @@ export type FieldError = {
   message: Scalars['String'];
 };
 
-export type UsernamePasswordInput = {
+export type RegisterInput = {
   username: Scalars['String'];
+  email: Scalars['String'];
   password: Scalars['String'];
 };
 
 export type LoginMutationVariables = Exact<{
-  username: Scalars['String'];
+  emailOrUsername: Scalars['String'];
   password: Scalars['String'];
 }>;
 
@@ -127,13 +130,14 @@ export type LoginMutation = (
       & Pick<FieldError, 'field' | 'message'>
     )>>, user?: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'username' | 'createdAt' | 'password'>
+      & Pick<User, 'id' | 'email' | 'username' | 'createdAt' | 'password'>
     )> }
   ) }
 );
 
 export type RegisterMutationVariables = Exact<{
   username: Scalars['String'];
+  email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
@@ -145,7 +149,7 @@ export type RegisterMutation = (
     & Pick<UserResponse, 'token'>
     & { user?: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'username' | 'id' | 'createdAt' | 'password'>
+      & Pick<User, 'username' | 'email' | 'id' | 'createdAt' | 'password'>
     )>, errors?: Maybe<Array<(
       { __typename?: 'FieldError' }
       & Pick<FieldError, 'field' | 'message'>
@@ -173,7 +177,7 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'username' | 'id' | 'createdAt' | 'password'>
+    & Pick<User, 'username' | 'email' | 'id' | 'createdAt' | 'password'>
   )> }
 );
 
@@ -203,14 +207,15 @@ export type ProductsQuery = (
 
 
 export const LoginDocument = gql`
-    mutation Login($username: String!, $password: String!) {
-  login(options: {username: $username, password: $password}) {
+    mutation Login($emailOrUsername: String!, $password: String!) {
+  login(emailOrUsername: $emailOrUsername, password: $password) {
     errors {
       field
       message
     }
     user {
       id
+      email
       username
       createdAt
       password
@@ -224,10 +229,11 @@ export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 };
 export const RegisterDocument = gql`
-    mutation Register($username: String!, $password: String!) {
-  register(options: {username: $username, password: $password}) {
+    mutation Register($username: String!, $email: String!, $password: String!) {
+  register(options: {username: $username, password: $password, email: $email}) {
     user {
       username
+      email
       id
       createdAt
       password
@@ -257,6 +263,7 @@ export const MeDocument = gql`
     query Me($token: String!) {
   me(token: $token) {
     username
+    email
     id
     createdAt
     password

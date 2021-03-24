@@ -11,6 +11,8 @@ import {
   formatExpirationDate,
   formatCVC,
 } from "../utils/cardDataValidaters";
+import { TextField, Box, Button, CircularProgress } from "@material-ui/core";
+import useStyles from "../mui-styles/Payment_Styles";
 
 type cardStateType = {
   cvc: React.ReactText;
@@ -29,6 +31,8 @@ const payment = () => {
     number: "",
     issuer: "",
   });
+
+  const classes = useStyles();
 
   const handleCallback = ({ issuer }: { issuer: string }, isValid: boolean) => {
     if (isValid) {
@@ -70,7 +74,7 @@ const payment = () => {
       <Head>
         <title>Payment | Add a payment method to get started</title>
       </Head>
-      <Layout className="">
+      <Layout className={classes.page}>
         <Cards
           cvc={cardState.cvc}
           expiry={cardState.expiry}
@@ -79,43 +83,74 @@ const payment = () => {
           number={cardState.number}
           callback={handleCallback}
         />
-        <form>
-          <input
+        <Box
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+          paddingY="5px"
+          display="flex"
+          className={classes.inputsCont}
+          mt={2}
+        >
+          <TextField
+            className={classes.inputField}
+            variant="outlined"
             type="tel"
             name="number"
-            placeholder="Card Number"
+            label="Card Number"
             onInput={handleInputChange}
             onFocus={handleInputFocus}
-            pattern="[\d| ]{16,22}"
             value={cardState.number}
           />
-          <input
+          <TextField
+            className={classes.inputField}
+            variant="outlined"
             type="text"
             name="name"
-            placeholder="Enter your Name"
+            label="Enter your Name"
             onFocus={handleInputFocus}
             onInput={handleInputChange}
             value={cardState.name}
           />
-          <input
+          <TextField
+            className={classes.inputField}
+            variant="outlined"
             type="tel"
             name="cvc"
-            placeholder="CVC"
+            label="CVC"
             onFocus={handleInputFocus}
-            pattern="\d{3,4}"
             value={cardState.cvc}
             onInput={handleInputChange}
           />
-          <input
+          <TextField
+            className={classes.inputField}
+            variant="outlined"
             type="tel"
             name="expiry"
-            placeholder="Expiry"
+            label="Expiry"
             onFocus={handleInputFocus}
-            pattern="\d\d/\d\d"
             value={cardState.expiry}
             onInput={handleInputChange}
           />
-        </form>
+          <Box className={classes.inputField}>
+            <Button
+              variant="contained"
+              color="primary"
+              // disabled={isSubmitting}
+              type="submit"
+              fullWidth
+            >
+              Add Card
+              {/* {isSubmitting && (
+                      <CircularProgress
+                        style={{ marginLeft: 10 }}
+                        size={15}
+                        color="primary"
+                      />
+                    )} */}
+            </Button>
+          </Box>
+        </Box>
       </Layout>
     </motion.div>
   );
