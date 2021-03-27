@@ -48,6 +48,7 @@ export type User = {
   email: Scalars['String'];
   createdAt: Scalars['String'];
   password: Scalars['String'];
+  stripeId: Scalars['String'];
 };
 
 export type Mutation = {
@@ -58,6 +59,7 @@ export type Mutation = {
   register: UserResponse;
   login: UserResponse;
   delete?: Maybe<User>;
+  addCreditCard?: Maybe<User>;
 };
 
 
@@ -92,7 +94,13 @@ export type MutationLoginArgs = {
 
 
 export type MutationDeleteArgs = {
-  username: Scalars['String'];
+  email: Scalars['String'];
+};
+
+
+export type MutationAddCreditCardArgs = {
+  address: Scalars['String'];
+  userId: Scalars['ID'];
 };
 
 export type UserResponse = {
@@ -113,6 +121,19 @@ export type RegisterInput = {
   email: Scalars['String'];
   password: Scalars['String'];
 };
+
+export type DeleteUserMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type DeleteUserMutation = (
+  { __typename?: 'Mutation' }
+  & { delete?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'username'>
+  )> }
+);
 
 export type LoginMutationVariables = Exact<{
   emailOrUsername: Scalars['String'];
@@ -206,6 +227,17 @@ export type ProductsQuery = (
 );
 
 
+export const DeleteUserDocument = gql`
+    mutation DeleteUser($email: String!) {
+  delete(email: $email) {
+    username
+  }
+}
+    `;
+
+export function useDeleteUserMutation() {
+  return Urql.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(DeleteUserDocument);
+};
 export const LoginDocument = gql`
     mutation Login($emailOrUsername: String!, $password: String!) {
   login(emailOrUsername: $emailOrUsername, password: $password) {

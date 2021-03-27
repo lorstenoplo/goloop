@@ -4,8 +4,9 @@ import {
   MeQuery,
   MeDocument,
   RegisterMutation,
+  DeleteUserMutation,
 } from "../src/generated/graphql";
-import { cacheExchange } from "@urql/exchange-graphcache";
+import { cacheExchange, query } from "@urql/exchange-graphcache";
 import betterUpdateQuery from "./betterUpdateQuery";
 
 export const CreateUrqlClient = (ssrExchange: any) => ({
@@ -45,6 +46,22 @@ export const CreateUrqlClient = (ssrExchange: any) => ({
                 } else {
                   return {
                     me: result.register.user,
+                  };
+                }
+              }
+            );
+          },
+          delete: (_result, args, cache, info) => {
+            return betterUpdateQuery<DeleteUserMutation, MeQuery>(
+              cache,
+              { query: MeDocument },
+              _result,
+              (result, query) => {
+                if (!result.delete?.username) {
+                  return query;
+                } else {
+                  return {
+                    me: null,
                   };
                 }
               }

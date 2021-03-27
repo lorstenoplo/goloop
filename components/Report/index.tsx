@@ -1,12 +1,12 @@
 import {
+  Box,
+  CircularProgress,
   DialogContent,
+  FormHelperText,
   ListItemIcon,
   TextField,
   Tooltip,
   Zoom,
-  FormHelperText,
-  Box,
-  CircularProgress,
 } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
@@ -24,11 +24,8 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import ReportIcon from "@material-ui/icons/Report";
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useReportMutation } from "../../src/generated/graphql";
-import LoadingScreen from "../LoadingScreen";
-import { useStateValue } from "../../context/StateProvider";
 import useGetUser from "../../utils/useGetUser";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -122,8 +119,8 @@ const Report: React.FC = () => {
                 onClick={sendReport}
               >
                 {fetching ? (
-                  <Box color="#ffffff">
-                    <CircularProgress size="30px" color="inherit" />
+                  <Box mt={1} color="#ffffff">
+                    <CircularProgress size="25px" color="inherit" />
                   </Box>
                 ) : (
                   <SendRoundedIcon />
@@ -146,7 +143,7 @@ const Report: React.FC = () => {
             multiline
           />
           <FormHelperText id="component-error-text">
-            {error && (error as any).message}
+            {error && <p>{(error as any).message}</p>}
           </FormHelperText>
         </DialogContent>
         <List style={{ flex: 1 }}>
