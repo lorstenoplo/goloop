@@ -83,9 +83,8 @@ const Register: React.FC<registerProps> = () => {
                 />
                 <InputField
                   onChange={handleChange}
-                  type="password"
+                  password
                   name="password"
-                  label="Password"
                   value={values.password}
                 />
                 <Box width="100%" margin={1}>

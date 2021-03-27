@@ -76,10 +76,9 @@ const Login: React.FC<loginProps> = () => {
                 />
                 <InputField
                   onChange={handleChange}
-                  type="password"
                   name="password"
-                  label="Password"
                   value={values.password}
+                  password
                 />
                 <Box my={2} width="100%">
                   <Typography variant="body2">

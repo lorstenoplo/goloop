@@ -25,7 +25,7 @@ import { Props } from "../../types/HomePageProps";
 import useGetUser from "../../utils/useGetUser";
 import SideBar from "../SideBar";
 import { green, blue } from "@material-ui/core/colors";
-
+import ErrorIcon from "@material-ui/icons/Error";
 interface NavbarProps {
   color?: string;
 }
@@ -248,7 +248,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             className={classes.accountIcon}
             onClick={handleProfileMenuOpen}
           >
-            <AccountCircle />
+            {error ? <ErrorIcon color="error" /> : <AccountCircle />}
+
             {fetching && (
               <CircularProgress
                 size={30}

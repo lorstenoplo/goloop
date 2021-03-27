@@ -4,6 +4,9 @@ import {
   TextField,
   Tooltip,
   Zoom,
+  FormHelperText,
+  Box,
+  CircularProgress,
 } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
@@ -57,9 +60,7 @@ const Report: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
-  const [{ data, error }, report] = useReportMutation();
-  const router = useRouter();
-
+  const [{ data, error, fetching }, report] = useReportMutation();
   const [user] = useGetUser();
 
   if (error) {
@@ -73,6 +74,14 @@ const Report: React.FC = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const sendReport = () => {
+    if (input.trim()) {
+      report({ username: user?.username || "", problem: input });
+      data?.report && handleClose();
+    }
+  };
+
   return (
     <div>
       <ListItem button onClick={handleClickOpen}>
@@ -102,16 +111,23 @@ const Report: React.FC = () => {
             <Typography variant="h6" className={classes.title}>
               Report a Problem
             </Typography>
-            <Tooltip title="Send your report" TransitionComponent={Zoom}>
+            <Tooltip
+              title={fetching ? "Wait" : "Send your report"}
+              TransitionComponent={Zoom}
+            >
               <Button
+                disabled={fetching}
                 autoFocus
                 color="inherit"
-                onClick={() => {
-                  report({ username: user?.username || "", problem: input });
-                  data?.report && handleClose();
-                }}
+                onClick={sendReport}
               >
-                <SendRoundedIcon />
+                {fetching ? (
+                  <Box color="#ffffff">
+                    <CircularProgress size="30px" color="inherit" />
+                  </Box>
+                ) : (
+                  <SendRoundedIcon />
+                )}
               </Button>
             </Tooltip>
           </Toolbar>
@@ -129,6 +145,9 @@ const Report: React.FC = () => {
             onChange={(e) => setInput(e.target.value)}
             multiline
           />
+          <FormHelperText id="component-error-text">
+            {error && (error as any).message}
+          </FormHelperText>
         </DialogContent>
         <List style={{ flex: 1 }}>
           <ListItem button>

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { withUrqlClient } from "next-urql";
 import Head from "next/head";
 import Link from "next/link";
-import { Layout, LoadingScreen, Product } from "../components";
+import { Layout, Product } from "../components";
 import { useProductsQuery } from "../src/generated/graphql";
 import styles from "../styles/Home.module.css";
 import { CreateUrqlClient } from "../utils/createUrqlClient";
@@ -11,10 +11,26 @@ import React from "react";
 import ScrollToTop from "../utils/ScrollToTop";
 import useStyles from "../mui-styles/Home_Styles";
 import Skeleton from "@material-ui/lab/Skeleton";
+import { Snackbar, IconButton } from "@material-ui/core";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import CloseIcon from "@material-ui/icons/Close";
+
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const Index: React.FC = () => {
   const [{ data, fetching, error }] = useProductsQuery();
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   if (error) {
     return <div style={{ color: "red" }}>{error.message}</div>;
@@ -88,6 +104,26 @@ const Index: React.FC = () => {
               ))}
           </Box>
         </motion.div>
+        {error && (
+          <Snackbar
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            action={
+              <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            }
+          >
+            <Alert severity="error">{(error as any).message}</Alert>
+          </Snackbar>
+        )}
       </Layout>
       <ScrollToTop />
     </motion.div>

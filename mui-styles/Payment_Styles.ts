@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme) => ({
   page: {
     width: "100%",
     display: "flex",
+    flexDirection: "row-reverse",
     alignItems: "center",
     justifyContent: "center",
     padding: 15,

@@ -90,7 +90,7 @@ const payment = () => {
           paddingY="5px"
           display="flex"
           className={classes.inputsCont}
-          mt={2}
+          mt={3}
         >
           <TextField
             className={classes.inputField}
