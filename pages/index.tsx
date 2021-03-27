@@ -32,10 +32,6 @@ const Index: React.FC = () => {
     setOpen(false);
   };
 
-  if (error) {
-    return <div style={{ color: "red" }}>{error.message}</div>;
-  }
-
   const stagger = {
     animate: {
       transition: {
