@@ -137,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 
   //if (fetching) return <LoadingScreen />;
 
-  if (error) return <p>{error.message}</p>;
+  // if (error) return <p>{error.message}</p>;
 
   let UserBody = () => <></>;
   if (!user) {
