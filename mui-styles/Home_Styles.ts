@@ -16,7 +16,7 @@ const useStyles = makeStyles(
         flexDirection: "row",
         paddingRight: "56px !important",
         paddingLeft: "56px !important",
-        [theme.breakpoints.down("md")]: {
+        [theme.breakpoints.down("sm")]: {
           paddingLeft: "0px !important",
           paddingRight: "0px !important",
           alignItems: "center",
@@ -34,7 +34,7 @@ const useStyles = makeStyles(
         flex: 0.5,
         marginBottom: "20px",
         marginTop: "20px",
-        [theme.breakpoints.down("md")]: {
+        [theme.breakpoints.down("sm")]: {
           width: "95vw",
         },
       },
@@ -58,7 +58,7 @@ const useStyles = makeStyles(
         fontWeight: 500,
       },
       productsContainer: {
-        [theme.breakpoints.down("md")]: {
+        [theme.breakpoints.down("sm")]: {
           justifyContent: "center",
         },
       },
