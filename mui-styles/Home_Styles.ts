@@ -16,7 +16,7 @@ const useStyles = makeStyles(
         flexDirection: "row",
         paddingRight: "56px !important",
         paddingLeft: "56px !important",
-        [theme.breakpoints.down("sm")]: {
+        [theme.breakpoints.down("md")]: {
           paddingLeft: "0px !important",
           paddingRight: "0px !important",
           alignItems: "center",
